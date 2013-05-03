@@ -1,0 +1,658 @@
+@charset "utf-8";
+
+// /* =Compass
+// /* http://liginc.co.jp/designer/archives/11623
+// -------------------------------------------------------------- */
+@import "compass";
+//@import "layout";
+
+/* =Support Browser
+-------------------------------------------------------------- */
+//@import "compass/support";
+$legacy-support-for-ie: true;
+$legacy-support-for-ie6: $legacy-support-for-ie;
+$legacy-support-for-ie7: $legacy-support-for-ie;
+$legacy-support-for-ie8: $legacy-support-for-ie;
+$experimental-support-for-mozilla: true;
+$experimental-support-for-webkit: true;
+$support-for-original-webkit-gradients: true;
+$experimental-support-for-opera: true;
+$experimental-support-for-microsoft: true;
+$experimental-support-for-khtml: true;
+$experimental-support-for-svg: true;
+//$experimental-support-for-pie: true;
+
+
+// /* =Reset default browser CSS.
+//	* Based on work by Eric Meyer: http://meyerweb.com/eric/tools/css/reset/index.html
+// -------------------------------------------------------------- */
+//@import "compass/reset";
+@import "compass/reset-legacy";
+
+
+// /* =Import Library CSS.
+// -------------------------------------------------------------- */
+@import "bootstrap";
+//@import "bootstrap-responsive";
+@import "chrome-tabs";
+
+// /* =Create Sprites
+// -------------------------------------------------------------- */
+//@import "include/*.png";
+//@include all-include-sprites;
+//$include-layout: smart;
+
+
+
+// /*=Fonts
+// -------------------------------------------------------------- */
+@import "font-awesome";
+//@import "font-entypo";
+
+
+// /*=Icons Set
+// -------------------------------------------------------------- */
+//@import "social-icons";
+
+
+// /*=Theme Color
+// -------------------------------------------------------------- */
+$theme-color: #FFFFFF;
+$theme-color-base-dark: #000000; // #7E8D9B;
+
+
+// /*=Webkit mixin
+// -------------------------------------------------------------- */
+@mixin user-select($val){
+	user-select: $val;
+	-webkit-user-select: $val;
+	-khtml-user-select: $val;
+	-moz-user-select: $val;
+}
+
+
+// /*=Format
+// -------------------------------------------------------------- */
+html {
+	//All
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-size-adjust: none;
+	
+	//Selection
+	/*
+	::selection{ background-color: #00CCFF; color: white; }
+	::moz-selection{ background-color: #00CCFF; color: white; }
+	::webkit-selection{ background-color: #00CCFF; color: white; }
+	*/
+	
+	//Float
+	.l, .r, .n { display: block; }
+	.l { float: left !important; }
+	.r { float: right !important; }
+	.n { float: none !important; }
+	
+	//text-align
+	.tl { text-align: left; }
+	.tr { text-align: right; }
+	.tj { text-align: justify; }
+	
+	//Display
+	.none { display: none !important; }
+	
+	//Position
+	.pr { position: relative; }
+	.pa { position: absolute; }
+	.ps { position: static; }
+	.pf { position: fixed; }
+	
+	//Text Image
+	.bg {
+		display: block;
+		margin: 0;
+		padding: 0;
+		text-indent: -9999px;
+		height: 0;
+		overflow: hidden;
+	}
+	
+	//Opacity
+	.alpha0,
+	.alpha01,.alpha02,.alpha03,.alpha04,.alpha05,
+	.alpha06,.alpha07,.alpha08,.alpha09,
+	.alpha1 {
+		@include transition(opacity .2s ease);
+	}
+		
+	.alpha0 { @include opacity(0); }
+	.alpha01 { @include opacity(.1); }
+	.alpha02 { @include opacity(.2); }
+	.alpha03 { @include opacity(.3); }
+	.alpha04 { @include opacity(.4); }
+	.alpha05 { @include opacity(.5); }
+	.alpha06 { @include opacity(.6); }
+	.alpha07 { @include opacity(.7); }
+	.alpha08 { @include opacity(.8); }
+	.alpha09 { @include opacity(.9); }
+	.alpha1 { @include opacity(1); }
+}
+
+
+// /*=All Settings
+// -------------------------------------------------------------- */
+$page-width: 960px;
+html {
+	width: 100%;
+	
+	body {
+		width: 100%;
+		margin: 0 auto 20px;
+		padding: 0;
+		float: none;
+		position: relative;
+		background: none;
+		background-color: #ffffff; //#B9CFE4; //#B9D5F0;
+		background-image: none;
+		//@include background-image(inline-image('backgrounds/b.png'));
+		background-repeat: repeat;
+		background-position: left top;
+		font-family: 'Lucida Grande',"Hiragino Kaku Gothic Pro","ヒラギノ角ゴ Pro W3","メイリオ","Meiryo","ＭＳ Ｐゴシック",sans-serif;
+		color: #222;
+		font-size: 12px;
+		font-weight: normal;
+		line-height: 1.6em;
+		text-align: left;
+		
+		
+		//*= 全般
+		//*-------------------------------------------------------------------- */
+		tr {
+			
+		}
+		td {
+			vertical-align: top !important;
+		}
+		input[type="text"],
+		input[type="password"] {
+			
+		}
+		input[type="submit"],
+		button {
+			@extend .btn;
+			width: auto !important;
+			height: auto !important;
+		}
+		
+		//*= js読み込み前の動作(各種非表示)
+		//*-------------------------------------------------------------------- */
+		//枠線(上下)
+		img[src~="https://vu8.sfc.keio.ac.jp/sfc-sfs/img2/page_top.gif"],
+		img[src~="https://vu8.sfc.keio.ac.jp/sfc-sfs/img2/page_bottom.gif"]
+		img[src~="https://vu8.sfc.keio.ac.jp/sfc-sfs/img2/page_top_l.gif"],
+		img[src~="https://vu8.sfc.keio.ac.jp/sfc-sfs/img2/page_top_r.gif"],
+		//枠線(左右)
+		td[width~="1"],
+		td[bgcolor~="#8ba1bd"],
+		//余白の除去(メインコンテンツ内)
+		td[width~="14"],
+		//デフォルトサイドナビ
+		td[width~="33"] {
+			display: none !important;
+		}
+		
+		
+		
+		//*= body直下テーブルコンテナ
+		//*-------------------------------------------------------------------- */
+		.container {
+			width: $page-width;
+			
+			//※ヘッダ含む
+			table[width~="853"] {
+				min-width: $page-width;
+				width: $page-width !important;
+				min-height: 72px;
+				margin: 0 auto;
+				padding: 0;
+				position: relative;
+			}
+			
+			//ヘッダコンテナ
+			&.header-container {
+				min-height: 80px;
+				width: 100%;
+				margin: 0 auto;
+				padding: 15px 0 0;
+				border: 1px solid transparent;
+				border-bottom: 1px solid rgba(0, 0, 0, .05);
+				background-color: transparent;
+				@include background(linear-gradient(
+					top, rgba(0, 0, 0, .06), transparent
+				));
+				.header-navi {
+					display: block;
+					position: relative;
+					width: 960px;
+					height: 0;
+					margin: 0 auto;
+					padding: 0;
+				}
+				.chrome-tabs-shell {
+					min-width: $page-width - 20px;
+					width: 100%;
+					margin: 0 auto;
+					padding: 20px 0 6px;
+					background: transparent;
+					.chrome-tab-favicon {
+						background-image: url('http://g.etfv.co/http://www.keio.ac.jp/')
+					}
+					@include user-select(none);
+					
+					&.fixed {
+						position: fixed;
+						top: 0;
+						left: 0;
+						right: 0;
+						background-image: -webkit-linear-gradient(top, #E2E2E2, #D0D0D0);
+					} //.fixed
+					
+				} //.chrome-tabs-shell
+			} //.header-container
+			
+			
+			//メインコンテナ
+			&.article-container {
+				width: 100%;
+				margin: 0 auto;
+				padding: 20px 0;
+				border: 1px solid transparent;
+				background-color: #E5EBF8;
+				@include background(linear-gradient(
+					top, #E5EBF8, #E5EBF8
+				));
+				@include border-radius(3px);
+				@include box-shadow(
+					rgba(0, 0, 0, .18) 1px 1px 0 inset,
+					rgba(0, 0, 0, .15) -1px -1px 0 inset,
+					rgba(0, 0, 0, .08) 0 0 4px
+				);
+				
+				$article-padding: 20px;
+				.article {
+					display: block;
+					width: $page-width - $article-padding*2;
+					min-height: 400px;
+					margin: 0 auto;
+					padding: $article-padding;
+					background-color: white;
+					border: none;
+					//border: solid 1px #E6E6E6;
+					//border-top: solid 1px #E6E6E6;
+					
+					@include border-radius(3px);
+					@include box-shadow(
+						rgba(0, 0, 0, .18) 1px 1px 0 inset,
+						rgba(0, 0, 0, .15) -1px -1px 0 inset,
+						rgba(0, 0, 0, .2) 0 4px 16px
+					); //rgba(0, 0, 0, 0.08) 0 0 4px
+					
+					//ナビ
+					#navigation {
+						.rnavi01,
+						.navi01 {
+							margin: 0 6px 0 0;
+							padding: 0px 12px 0 30px;
+							float: left;
+							background-repeat: no-repeat;
+							border-bottom: 1px solid #FC6;
+							line-height: 18px;
+						}
+						
+						.rnavi01 {
+							
+						} //.rnavi01
+						.navi01 {
+							
+						} //.navi01
+					} //#navigation
+					
+					ul.small {
+						margin: 10px 20px 30px;
+						padding: 2px 5px 2px 15px;
+						border-left: 5px solid #EEE;
+						li {
+							margin: 2px 0;
+							padding: 0 16px;
+							color: #222;
+							font-size: 12px;
+							font-weight: normal;
+							line-height: 1.4em;
+							&:before {
+								content: '-';
+								margin-left: -1em;
+							} //$vblockquote:before
+						} //li
+					} //ul.small
+					
+					$h-padding: 10px;
+					h1, h2, h3, h4, h5, h6 {
+						&.one {
+							width: $page-width - $article-padding*2 - $h-padding*2 - (6px + 1px);
+							margin: 10px 0px;
+							padding: 4px $h-padding;
+							font-weight: bold;
+							font-size: 14px;
+							line-height: 22px;
+							border: #DDD 1px solid;
+							border-left: #FC6 6px solid;
+							background-color: rgba(0, 0, 0, .02);
+						} //.one
+					} //h1~h3
+					h4, h5, h6.one {
+						&.one {
+							font-size: 13px;
+							border: none;
+							border-bottom: #DDD 1px solid;
+							border-left: #FC6 6px solid;
+						} //.one
+					} //h4~h6
+					
+				} //.article
+			} //.article-container
+			
+			
+			//フッターコンテナ
+			&.footer-container {
+				
+			}
+		} //.container
+		
+		
+		
+		//*= ヘッダーナビ
+		//*-------------------------------------------------------------------- */
+		$headernavi-width: 96px;
+		$headernavi-height: 24px;
+		$headernavi-abstruct: $headernavi-width + 5px;
+		.header-navi {
+			ul.header-navi-items {
+				position: absolute;
+				top: 40px;
+				right: -5px;
+				margin: 0;
+				padding: 0;
+				z-index: 200;
+				li.header-navi-item {
+					display: block;
+					float: left;
+					width: $headernavi-width;
+					height: 30px;
+					margin: 0 6px 0 0;
+					padding: 0;
+					a {
+						cursor: pointer;
+						outline: 0;
+						display: block;
+						width: $headernavi-width;
+						height: $headernavi-height;
+						margin: 0;
+						padding: 6px 0 0;
+						color: #444;
+						font-size: 13px;
+						font-weight: bold;
+						line-height: $headernavi-height;
+						text-align: center;
+						background-color: #F2F2F2;
+						background-image: none;
+						@include border-radius(5px 5px 0 0);
+						@include box-shadow(
+							inset 0px 5px 0px #FC6,
+							inset 1px 0px 0px #CCC,
+							inset -1px 0px 0px #CCC
+						);
+						@include transition(all .2s 0 ease);
+					} //a
+					&.item-current a,
+					a:hover {
+						color: #333;
+						text-decoration: none;
+						background-color: white;
+					} //hover
+					
+					@mixin headernavi($color, $name){
+						a {
+							@include box-shadow(
+								inset 0px 5px 0px $color,
+								inset 1px 0px 0px #CCC,
+								inset -1px 0px 0px #CCC
+							);
+							&::after { content: $name; }
+						} //a
+					} //mixin
+					&.item-cource {
+						@include headernavi(#FC6, '履修授業');
+					} //&.item-cource
+					&.item-plan {
+						@include headernavi(#FCC, 'プラン');
+					}
+					&.item-mentor {
+						@include headernavi(#CC9, 'メンター');
+					}
+					&.item-graduate {
+						@include headernavi(#C8C8FF, '卒プロ');
+					}
+				} //.header-navi-item
+			} //.header-navi-items
+		} //.header-navi
+		
+		
+		//*= ヘッダー
+		//*-------------------------------------------------------------------- */
+		$logo-width: 700px / 2;
+		$logo-height: 144px / 2;
+		$loader-width: 100px;
+		
+		//SFC-SFSロゴ
+		td[width~="350"] {
+			display: block;
+			float: left;
+			width: $logo-width !important;
+			a {
+				display: block;
+				width: $logo-width;
+				height: $logo-height;
+				@include background-image(inline-image('logo/sfcsfs_v4.png'));
+				background-repeat: no-repeat;
+				background-size: $logo-width $logo-height;
+				img {
+					display: none !important;
+				} //img
+			} //a
+		} //td[width~="350"]
+		
+		//SFC-SFSロゴ(ログイン画面)
+		table[width="850"] td {
+			display: block;
+			float: left;
+			width: $logo-width !important;
+			h1 {
+				display: block;
+				width: $logo-width;
+				height: $logo-height;
+				@include background-image(inline-image('logo/sfcsfs_v4.png'));
+				background-repeat: no-repeat;
+				background-size: $logo-width $logo-height;
+				img {
+					display: none !important;
+				} //img
+			} //a
+		} //table
+		
+		//ローダ
+		td.loader {
+			display: block;
+			float: left !important;
+			width: $loader-width;
+			height: $logo-height - 10px;
+			background-color: transparent;
+			@include background-image(
+				inline-image('loadings/snake.gif')
+			); //bouncingball.gif
+			background-repeat: no-repeat;
+			background-position: right bottom;
+			background-size: auto;
+			//@extend .alpha0;
+		}
+		//氏名
+		td[width~="443"] {
+			display: block;
+			float: right;
+			width: $page-width - $logo-width - $loader-width !important;
+			margin: 0;
+			padding: 0;
+			text-align: right !important;
+		}
+		//ログアウトアイコン
+		td[width~="60"] {
+			display: block;
+			float: right;
+			width: $page-width - $logo-width - $loader-width !important;
+			margin: 0;
+			padding: 4px 0 0;
+			text-align: right !important;
+			a {
+				display: block;
+				float: right;
+				height: 12px;
+				width: 80px;
+				margin: 0;
+				padding: 0;
+				font-size: 12px;
+				font-weight: bold;
+				line-height: 1em;
+				text-align: right;
+				&::after {
+					content: "ログアウト";
+				}
+				img {
+					 display: none !important;
+				} //img
+			} //a
+		} //td
+		
+		
+		/*= article / メインコンテンツ
+		*-------------------------------------------------------------------- *
+		$table-content: $page-width;
+		td[width~="818"],
+		td[bgcolor~="#FFFFFF"] {
+			min-width: $page-width;
+			width: $page-width;
+			background-color: transparent !important;
+		}
+		.article-container,
+		table[width~="818"] {
+			display: block;
+			width: $table-content - 20px;
+			min-height: 400px;
+			margin: 0 auto;
+			padding: 10px;
+			background-color: white;
+			//border: solid 1px #E6E6E6;
+			//border-top: solid 1px #E6E6E6;
+			border: none;
+			
+			@include border-radius(3px);
+			@include box-shadow(
+				rgba(0, 0, 0, .18) 1px 1px 0 inset,
+				rgba(0, 0, 0, .15) -1px -1px 0 inset,
+				rgba(0, 0, 0, 0.08) 0 0 4px
+			);
+		} //table[width~="818"]
+		
+		//メインコンテンツ
+		td[width~="790"] {
+			display: block;
+			width: $page-width - 20px !important;
+			
+			
+		} //td[width~="790"]
+		*/
+		
+		
+		.myschedule {
+			table {
+				$schedule-margin: 20px;
+				width: $page-width - $schedule-margin * 2 - 2px !important;
+				margin: 4px $schedule-margin 10px;
+				
+				tr[bgcolor="#cbd7e4"] {
+					th {
+						height: 24px;
+						padding: 2px 4px;
+						font-size: 12px;
+						font-weight: bold;
+						text-align: center;
+						border-bottom: thin solid #C9C9C9;
+						border-right: 1px solid white;
+						@include background(
+							linear-gradient(top, #FBFBFC, #EFF3F4)
+						);
+					}
+				} //tr
+				tr[bgcolor="#eeeeee"] {
+					td {
+						border: 1px solid white;
+						border-top: none;
+						border-left: none;
+						padding: 4px;
+						font-size: 12px;
+						font-weight: normal;
+						text-align: left;
+						a {
+							font-weight: bold;
+						} //a
+					} //td
+				} //tr
+			} //table
+		} //.myschedule
+		
+	} //body
+} //html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
