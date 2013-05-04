@@ -118,6 +118,8 @@
       return chromeTabs.render($shell);
     },
     updateTab: function($shell, $tab, tabData) {
+      alert( $tab.find('.chrome-tab-title').html() );
+      alert( tabData.title );
       $tab.find('.chrome-tab-title').html(tabData.title);
       $tab.find('.chrome-tab-favicon').css({
         backgroundImage: "url('" + tabData.favicon + "')"

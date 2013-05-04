@@ -1,20 +1,19 @@
 {
-   "content_scripts": [ {
-      "css": [ "custom.css" ],
-      "js": [ "jquery.js", "jquery-ui.js", "chrome.js", "custom.js" ],
-      "matches": [ "https://vu8.sfc.keio.ac.jp/sfc-sfs/*", "https://vu9.sfc.keio.ac.jp/sfc-sfs/*" ]
-   } ],
-   "description": "慶応義塾大学生に使われるSFC-SFSのユーザビリティを向上することを目的に開発されました。デザインのほかタブ機能を始めとした拡張によってスムーズな管理を可能とします。",
-   "icons": {
-      "128": "icon128.png",
-      "64": "icon64.png",
-      "48": "icon48.png",
-      "16": "icon16.png"
-   },
-   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDBUgq44ust+6E2ISMJt5qIzi0ZkZc6GloTsxswzXQEJxiu/cjrBZpH2qj4UP9eNDp0Xzo+hV/398AqUecDQU7ofdygbMXTRXk9H9x4uOSZjfVJaBWPeG1FxtMZqVqWfDssl9gEb33gprPudkhyWwgoaYFE7GtN0clTpnWyqOlZtQIDAQAB",
-   "manifest_version": 2,
-   "name": "SFC MOTTO",
-   "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "0.1.1",
-   "web_accessible_resources": [ "custom2.css" ]
+  "manifest_version": 2,
+  "name": "SFC-SFS+",
+  "description": "慶應大生によるSFC-SFSの効率化ツール. デザインのほか,マルチタブ機能を始めとした拡張により, スムーズな生活管理を可能とします.",
+  "version": "0.7.1",
+  "permissions": [],
+  "optional_permissions": [],
+  "icons": {
+    "128": "icon128.png",
+    "64": "icon64.png",
+    "48": "icon48.png",
+    "16": "icon16.png"
+  },
+  "content_scripts": [{
+    "css": [ "custom.css" ],
+    "js": [ "jquery.js", "jquery-ui.js", "chrome.js", "custom.js" ],
+    "matches": [ "https://vu8.sfc.keio.ac.jp/sfc-sfs/*", "https://vu9.sfc.keio.ac.jp/sfc-sfs/*" ]
+  }]
 }

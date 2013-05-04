@@ -175,11 +175,16 @@ html {
 		input[type="password"] {
 			
 		}
-		input[type="submit"],
-		button {
+		button,
+		input[type="button"],
+		input[type="submit"] {
 			@extend .btn;
 			width: auto !important;
 			height: auto !important;
+		}
+		input[type="reset"] {
+			@extend .btn;
+			@extend .btn-info;
 		}
 		
 		//*= js読み込み前の動作(各種非表示)
@@ -222,8 +227,8 @@ html {
 				width: 100%;
 				margin: 0 auto;
 				padding: 15px 0 0;
-				border: 1px solid transparent;
-				border-bottom: 1px solid rgba(0, 0, 0, .05);
+				border: 0px solid transparent;
+				//border-bottom: 1px solid rgba(0, 0, 0, .05);
 				background-color: transparent;
 				@include background(linear-gradient(
 					top, rgba(0, 0, 0, .06), transparent
@@ -242,6 +247,10 @@ html {
 					margin: 0 auto;
 					padding: 20px 0 6px;
 					background: transparent;
+					.chrome-tab-title {
+						color: #444;
+						font-size: 11px;
+					} //.chrome-tab-title
 					.chrome-tab-favicon {
 						background-image: url('http://g.etfv.co/http://www.keio.ac.jp/')
 					}
@@ -264,15 +273,15 @@ html {
 				width: 100%;
 				margin: 0 auto;
 				padding: 20px 0;
-				border: 1px solid transparent;
+				border: 0px solid transparent;
 				background-color: #E5EBF8;
 				@include background(linear-gradient(
 					top, #E5EBF8, #E5EBF8
 				));
 				@include border-radius(3px);
 				@include box-shadow(
-					rgba(0, 0, 0, .18) 1px 1px 0 inset,
-					rgba(0, 0, 0, .15) -1px -1px 0 inset,
+					rgba(0, 0, 0, .18) 0 0 0 inset,
+					rgba(0, 0, 0, .15) 0 -1px 0 inset,
 					rgba(0, 0, 0, .08) 0 0 4px
 				);
 				
@@ -297,16 +306,20 @@ html {
 					
 					//ナビ
 					#navigation {
+						width: $page-width - $article-padding*2;
+						height: auto;
+						margin: 0 auto;
 						.rnavi01,
 						.navi01 {
-							margin: 0 6px 0 0;
-							padding: 0px 12px 0 30px;
-							float: left;
-							background-repeat: no-repeat;
-							border-bottom: 1px solid #FC6;
+							margin: 0px 8px 0px 0px;
+							padding: 0px 14px 0px 32px;
+							font-size: 12px;
 							line-height: 18px;
+							text-align: center;
+							@include border-radius(2px);
+							@include box-shadow(0px 0px 2px #DDD);
+							background-position: left center;
 						}
-						
 						.rnavi01 {
 							
 						} //.rnavi01
@@ -315,6 +328,7 @@ html {
 						} //.navi01
 					} //#navigation
 					
+					//お知らせ
 					ul.small {
 						margin: 10px 20px 30px;
 						padding: 2px 5px 2px 15px;
@@ -333,6 +347,7 @@ html {
 						} //li
 					} //ul.small
 					
+					//タイトル全般
 					$h-padding: 10px;
 					h1, h2, h3, h4, h5, h6 {
 						&.one {
@@ -345,16 +360,31 @@ html {
 							border: #DDD 1px solid;
 							border-left: #FC6 6px solid;
 							background-color: rgba(0, 0, 0, .02);
+							@include background-image(linear-gradient(
+								top, white, #F1F1F1
+							));
+							//@include border-radius(2px);
 						} //.one
 					} //h1~h3
 					h4, h5, h6.one {
 						&.one {
+							width: $page-width - $article-padding*2 - $h-padding*2 - (6px + 1px);
+							margin: 10px 0;
 							font-size: 13px;
 							border: none;
 							border-bottom: #DDD 1px solid;
 							border-left: #FC6 6px solid;
 						} //.one
 					} //h4~h6
+					
+					//時程詳細
+					table[width='100%'][border='0'] {
+						display: block;
+						p {
+							
+						}
+					} //table
+					
 					
 				} //.article
 			} //.article-container
@@ -403,11 +433,14 @@ html {
 						text-align: center;
 						background-color: #F2F2F2;
 						background-image: none;
+						@include background(linear-gradient(
+							top, #EEE, #F9F9F9
+						));
 						@include border-radius(5px 5px 0 0);
 						@include box-shadow(
 							inset 0px 5px 0px #FC6,
-							inset 1px 0px 0px #CCC,
-							inset -1px 0px 0px #CCC
+							inset 1px 0px 0px rgba(0,0,0,.1),
+							inset -1px 0px 0px rgba(0,0,0,.1)
 						);
 						@include transition(all .2s 0 ease);
 					} //a
@@ -416,29 +449,33 @@ html {
 						color: #333;
 						text-decoration: none;
 						background-color: white;
+						background-image: none;
+						@include background(linear-gradient(
+							top, #FFFFFF, #F9F9F9
+						));
 					} //hover
 					
 					@mixin headernavi($color, $name){
 						a {
 							@include box-shadow(
 								inset 0px 5px 0px $color,
-								inset 1px 0px 0px #CCC,
-								inset -1px 0px 0px #CCC
+								inset 1px 0px 0px rgba(0,0,0,.1),
+								inset -1px 0px 0px rgba(0,0,0,.1) //#CCC->#DDD
 							);
 							&::after { content: $name; }
 						} //a
 					} //mixin
 					&.item-cource {
-						@include headernavi(#FC6, '履修授業');
+						@include headernavi(#FC6, '履修授業'); //#F9B256
 					} //&.item-cource
 					&.item-plan {
-						@include headernavi(#FCC, 'プラン');
+						@include headernavi(#FCC, 'プラン'); //#E46F61
 					}
 					&.item-mentor {
-						@include headernavi(#CC9, 'メンター');
+						@include headernavi(#CC9, 'メンター'); //#8CC474
 					}
 					&.item-graduate {
-						@include headernavi(#C8C8FF, '卒プロ');
+						@include headernavi(#C8C8FF, '卒プロ'); //#6F85BF
 					}
 				} //.header-navi-item
 			} //.header-navi-items
@@ -450,6 +487,19 @@ html {
 		$logo-width: 700px / 2;
 		$logo-height: 144px / 2;
 		$loader-width: 100px;
+		
+		//ログイン画面
+		table[width="850"] {
+			width: $page-width;
+			margin: 0 auto;
+			td[align="right"] {
+				display: block;
+				width: $page-width - $logo-width !important;
+				margin: 0;
+				padding: 0;
+				text-align: right;
+			}
+		} //table
 		
 		//SFC-SFSロゴ
 		td[width~="350"] {
@@ -538,45 +588,6 @@ html {
 				} //img
 			} //a
 		} //td
-		
-		
-		/*= article / メインコンテンツ
-		*-------------------------------------------------------------------- *
-		$table-content: $page-width;
-		td[width~="818"],
-		td[bgcolor~="#FFFFFF"] {
-			min-width: $page-width;
-			width: $page-width;
-			background-color: transparent !important;
-		}
-		.article-container,
-		table[width~="818"] {
-			display: block;
-			width: $table-content - 20px;
-			min-height: 400px;
-			margin: 0 auto;
-			padding: 10px;
-			background-color: white;
-			//border: solid 1px #E6E6E6;
-			//border-top: solid 1px #E6E6E6;
-			border: none;
-			
-			@include border-radius(3px);
-			@include box-shadow(
-				rgba(0, 0, 0, .18) 1px 1px 0 inset,
-				rgba(0, 0, 0, .15) -1px -1px 0 inset,
-				rgba(0, 0, 0, 0.08) 0 0 4px
-			);
-		} //table[width~="818"]
-		
-		//メインコンテンツ
-		td[width~="790"] {
-			display: block;
-			width: $page-width - 20px !important;
-			
-			
-		} //td[width~="790"]
-		*/
 		
 		
 		.myschedule {

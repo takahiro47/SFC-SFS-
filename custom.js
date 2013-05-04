@@ -45,7 +45,8 @@ $(function() {
 		login_flag = true;
 	}
 	if (login_flag) {
-		
+		//
+	} else {
 		/* =HTML整形
 		 *------------------------------------------------------ */
 		function html_arrange() {
@@ -53,8 +54,8 @@ $(function() {
 			$("td[width~='1'], td[bgcolor~='#8ba1bd'], td[width~='14']").remove();
 			
 			//枠の削除
-			$("img[src$='page_top.gif']").closest('table').remove();
-			$("img[src$='page_bottom.gif']").closest('table').remove();
+			$("img[src$='page_top.gif'], img[src$='page_top_l.gif'], img[src$='page_bottom.gif']")
+				.closest('table').remove();
 			
 			//HTML構成の整形
 			$("body > table").each(function(){
@@ -139,25 +140,23 @@ $(function() {
 		
 		/* =Chromeタブ 初期化
 		 *------------------------------------------------------ */
-		var $chromeTabsExampleShell = $('.chrome-tabs-shell')
+		var $chromeTabsHeaderShell = $('.chrome-tabs-shell')
 		chromeTabs.init({
-			$shell: $chromeTabsExampleShell,
-			minWidth: 100,
-			maxWidth: 960
+			$shell: $chromeTabsHeaderShell,
+			minWidth: 80,
+			maxWidth: 180
 		});
-		/*
-		chromeTabs.addNewTab($chromeTabsExampleShell, {
+		chromeTabs.addNewTab($chromeTabsHeaderShell, {
 			favicon: 'http://g.etfv.co/http://www.keio.ac.jp/',
 			title: 'New Tab',
 			data: {
 				timeAdded: +new Date()
 			}
 		});
-		*/
-		$chromeTabsExampleShell.bind('chromeTabRender', function(){
-			var $currentTab = $chromeTabsExampleShell.find('.chrome-tab-current');
+		$chromeTabsHeaderShell.bind('chromeTabRender', function(){
+			var $currentTab = $chromeTabsHeaderShell.find('.chrome-tab-current');
 			if ($currentTab.length && window['console'] && console.log) {
-				//console.log('Current tab index', $currentTab.index(), 'title', $.trim($currentTab.text()), 'data', $currentTab.data('tabData').data);
+				console.log('CurrentTab index:', $currentTab.index(), ', title:', $.trim($currentTab.text()), ', data:', $currentTab.data('tabData').data);
 			}
 		});
 		
@@ -211,11 +210,12 @@ $(function() {
 		/* =HTML4 PushState
 		 *------------------------------------------------------ */
 		var _href; //同一ページのpushState二重投稿防止用
-		var _target = '.article';
+		var push_target_html5 = '.article';
+		var push_target_html4 = 'td[width="790"]';
 		//初期ページのタイトルとHTMLを定義
 		var _default = { 
 			title : document.title,
-			content : $(_target).html()
+			content : $(push_target_html5).html()
 		};
 		//PushState
 		var pushStateToggle = function(){
@@ -250,16 +250,35 @@ $(function() {
 				refreshInfo();
 			}
 			loadContent = function(){
-				$(_target).closest('td').load(request+" "+_target,displayContent);
+				$(push_target_html5).load(request+" "+push_target_html4, displayContent);
 			}
 			loadContent();
 		}
 		if (window.history && window.history.pushState) {
 			//PushState(リンクボタン押下時挙動)
-			$(document).on('click', _target+' a', pushStateToggle);
-			$(document).on('click', _target+' a', function(e){ e.preventDefault(); }); //リンク遷移無効化
+			$(document).on('click', push_target_html5+' #navigation a', pushStateToggle);
+			$(document).on('click', push_target_html5+' #navigation a', function(e){ e.preventDefault(); }); //リンク遷移無効化
 		}
 		
+		/* =授業ページをタブで開く機能
+		 *------------------------------------------------------ */
+		$(document).on('click', '.myschedule td[bgcolor="#eeeeee"] a', function(e){
+			$this = $(this);
+			//遷移なし
+			e.preventDefault();
+			//タブ追加
+			chromeTabs.addNewTab($chromeTabsHeaderShell, {
+				favicon: 'http://g.etfv.co/http://www.keio.ac.jp/',
+				title: $this.text(),
+				data: {
+					timeAdded: +new Date()
+				}
+			});
+			//タブをアクティブ化
+			
+			//コンテンツをロード
+			//$('current-tab').load
+		});
 		
 		
 		
