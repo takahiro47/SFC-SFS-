@@ -77,34 +77,34 @@ html {
 	//All
 	-webkit-font-smoothing: antialiased;
 	-webkit-text-size-adjust: none;
-	
+
 	//Selection
 	/*
 	::selection{ background-color: #00CCFF; color: white; }
 	::moz-selection{ background-color: #00CCFF; color: white; }
 	::webkit-selection{ background-color: #00CCFF; color: white; }
 	*/
-	
+
 	//Float
 	.l, .r, .n { display: block; }
 	.l { float: left !important; }
 	.r { float: right !important; }
 	.n { float: none !important; }
-	
+
 	//text-align
 	.tl { text-align: left; }
 	.tr { text-align: right; }
 	.tj { text-align: justify; }
-	
+
 	//Display
 	.none { display: none !important; }
-	
+
 	//Position
 	.pr { position: relative; }
 	.pa { position: absolute; }
 	.ps { position: static; }
 	.pf { position: fixed; }
-	
+
 	//Text Image
 	.bg {
 		display: block;
@@ -114,7 +114,7 @@ html {
 		height: 0;
 		overflow: hidden;
 	}
-	
+
 	//Opacity
 	.alpha0,
 	.alpha01,.alpha02,.alpha03,.alpha04,.alpha05,
@@ -122,7 +122,7 @@ html {
 	.alpha1 {
 		@include transition(opacity .2s ease);
 	}
-		
+
 	.alpha0 { @include opacity(0); }
 	.alpha01 { @include opacity(.1); }
 	.alpha02 { @include opacity(.2); }
@@ -142,7 +142,7 @@ html {
 $page-width: 960px;
 html {
 	width: 100%;
-	
+
 	body {
 		width: 100%;
 		margin: 0 auto 20px;
@@ -161,19 +161,19 @@ html {
 		font-weight: normal;
 		line-height: 1.6em;
 		text-align: left;
-		
-		
+
+
 		//*= 全般
 		//*-------------------------------------------------------------------- */
 		tr {
-			
+
 		}
 		td {
 			vertical-align: top !important;
 		}
 		input[type="text"],
 		input[type="password"] {
-			
+
 		}
 		button,
 		input[type="button"],
@@ -184,9 +184,10 @@ html {
 		}
 		input[type="reset"] {
 			@extend .btn;
+			@extend .btn-small;
 			@extend .btn-info;
 		}
-		
+
 		//*= js読み込み前の動作(各種非表示)
 		//*-------------------------------------------------------------------- */
 		//枠線(上下)
@@ -203,14 +204,14 @@ html {
 		td[width~="33"] {
 			display: none !important;
 		}
-		
-		
-		
+
+
+
 		//*= body直下テーブルコンテナ
 		//*-------------------------------------------------------------------- */
 		.container {
 			width: $page-width;
-			
+
 			//※ヘッダ含む
 			table[width~="853"] {
 				min-width: $page-width;
@@ -220,7 +221,7 @@ html {
 				padding: 0;
 				position: relative;
 			}
-			
+
 			//ヘッダコンテナ
 			&.header-container {
 				min-height: 80px;
@@ -231,7 +232,7 @@ html {
 				//border-bottom: 1px solid rgba(0, 0, 0, .05);
 				background-color: transparent;
 				@include background(linear-gradient(
-					top, rgba(0, 0, 0, .06), transparent
+					top, rgba(0, 0, 0, .04), transparent
 				));
 				.header-navi {
 					display: block;
@@ -241,33 +242,35 @@ html {
 					margin: 0 auto;
 					padding: 0;
 				}
-				.chrome-tabs-shell {
+				.chrome-tabs-shell-container {
 					min-width: $page-width - 20px;
 					width: 100%;
 					margin: 0 auto;
-					padding: 20px 0 6px;
-					background: transparent;
-					.chrome-tab-title {
-						color: #444;
-						font-size: 11px;
-					} //.chrome-tab-title
-					.chrome-tab-favicon {
-						background-image: url('http://g.etfv.co/http://www.keio.ac.jp/')
-					}
-					@include user-select(none);
-					
-					&.fixed {
-						position: fixed;
-						top: 0;
-						left: 0;
-						right: 0;
-						background-image: -webkit-linear-gradient(top, #E2E2E2, #D0D0D0);
-					} //.fixed
-					
-				} //.chrome-tabs-shell
+					padding: 20px 0 0;
+					.chrome-tabs-shell {
+						background: transparent;
+						.chrome-tab-title {
+							color: #444;
+							font-size: 11px;
+						} //.chrome-tab-title
+						.chrome-tab-favicon {
+							background-image: url('http://g.etfv.co/http://www.keio.ac.jp/')
+						}
+						@include user-select(none);
+
+						&.fixed {
+							position: fixed;
+							top: 0;
+							left: 0;
+							right: 0;
+							background-image: -webkit-linear-gradient(top, #E2E2E2, #D0D0D0);
+						} //.fixed
+
+					} //.chrome-tabs-shell
+				}
 			} //.header-container
-			
-			
+
+
 			//メインコンテナ
 			&.article-container {
 				width: 100%;
@@ -277,14 +280,14 @@ html {
 				background-color: #E5EBF8;
 				@include background(linear-gradient(
 					top, #E5EBF8, #E5EBF8
-				));
+					));
 				@include border-radius(3px);
 				@include box-shadow(
 					rgba(0, 0, 0, .18) 0 0 0 inset,
 					rgba(0, 0, 0, .15) 0 -1px 0 inset,
 					rgba(0, 0, 0, .08) 0 0 4px
-				);
-				
+					);
+
 				$article-padding: 20px;
 				.article {
 					display: block;
@@ -296,14 +299,14 @@ html {
 					border: none;
 					//border: solid 1px #E6E6E6;
 					//border-top: solid 1px #E6E6E6;
-					
+
 					@include border-radius(3px);
 					@include box-shadow(
 						rgba(0, 0, 0, .18) 1px 1px 0 inset,
 						rgba(0, 0, 0, .15) -1px -1px 0 inset,
 						rgba(0, 0, 0, .2) 0 4px 16px
 					); //rgba(0, 0, 0, 0.08) 0 0 4px
-					
+
 					//ナビ
 					#navigation {
 						width: $page-width - $article-padding*2;
@@ -321,13 +324,13 @@ html {
 							background-position: left center;
 						}
 						.rnavi01 {
-							
+
 						} //.rnavi01
 						.navi01 {
-							
+
 						} //.navi01
 					} //#navigation
-					
+
 					//お知らせ
 					ul.small {
 						margin: 10px 20px 30px;
@@ -346,9 +349,9 @@ html {
 							} //$vblockquote:before
 						} //li
 					} //ul.small
-					
+
 					//タイトル全般
-					$h-padding: 10px;
+					$h-padding: 20px;
 					h1, h2, h3, h4, h5, h6 {
 						&.one {
 							width: $page-width - $article-padding*2 - $h-padding*2 - (6px + 1px);
@@ -357,12 +360,20 @@ html {
 							font-weight: bold;
 							font-size: 14px;
 							line-height: 22px;
+							border: none;
+							/*
 							border: #DDD 1px solid;
 							border-left: #FC6 6px solid;
+							*/
 							background-color: rgba(0, 0, 0, .02);
 							@include background-image(linear-gradient(
 								top, white, #F1F1F1
-							));
+								));
+							@include box-shadow(
+								inset 6px 0px 0px #FC6,
+								inset -1px 1px 0px #EEE,
+								inset 0px -1px 0px #DFDFDF
+								);
 							//@include border-radius(2px);
 						} //.one
 					} //h1~h3
@@ -371,33 +382,34 @@ html {
 							width: $page-width - $article-padding*2 - $h-padding*2 - (6px + 1px);
 							margin: 10px 0;
 							font-size: 13px;
-							border: none;
+							/*
 							border-bottom: #DDD 1px solid;
 							border-left: #FC6 6px solid;
+							*/
 						} //.one
 					} //h4~h6
-					
+
 					//時程詳細
 					table[width='100%'][border='0'] {
 						display: block;
 						p {
-							
+
 						}
 					} //table
-					
-					
+
+
 				} //.article
 			} //.article-container
-			
-			
+
+
 			//フッターコンテナ
 			&.footer-container {
-				
+
 			}
 		} //.container
-		
-		
-		
+
+
+
 		//*= ヘッダーナビ
 		//*-------------------------------------------------------------------- */
 		$headernavi-width: 96px;
@@ -435,13 +447,13 @@ html {
 						background-image: none;
 						@include background(linear-gradient(
 							top, #EEE, #F9F9F9
-						));
+							));
 						@include border-radius(5px 5px 0 0);
 						@include box-shadow(
 							inset 0px 5px 0px #FC6,
 							inset 1px 0px 0px rgba(0,0,0,.1),
 							inset -1px 0px 0px rgba(0,0,0,.1)
-						);
+							);
 						@include transition(all .2s 0 ease);
 					} //a
 					&.item-current a,
@@ -452,16 +464,16 @@ html {
 						background-image: none;
 						@include background(linear-gradient(
 							top, #FFFFFF, #F9F9F9
-						));
+							));
 					} //hover
-					
+
 					@mixin headernavi($color, $name){
 						a {
 							@include box-shadow(
 								inset 0px 5px 0px $color,
 								inset 1px 0px 0px rgba(0,0,0,.1),
 								inset -1px 0px 0px rgba(0,0,0,.1) //#CCC->#DDD
-							);
+								);
 							&::after { content: $name; }
 						} //a
 					} //mixin
@@ -480,14 +492,14 @@ html {
 				} //.header-navi-item
 			} //.header-navi-items
 		} //.header-navi
-		
-		
+
+
 		//*= ヘッダー
 		//*-------------------------------------------------------------------- */
 		$logo-width: 700px / 2;
 		$logo-height: 144px / 2;
 		$loader-width: 100px;
-		
+
 		//ログイン画面
 		table[width="850"] {
 			width: $page-width;
@@ -500,7 +512,7 @@ html {
 				text-align: right;
 			}
 		} //table
-		
+
 		//SFC-SFSロゴ
 		td[width~="350"] {
 			display: block;
@@ -518,7 +530,7 @@ html {
 				} //img
 			} //a
 		} //td[width~="350"]
-		
+
 		//SFC-SFSロゴ(ログイン画面)
 		table[width="850"] td {
 			display: block;
@@ -536,7 +548,7 @@ html {
 				} //img
 			} //a
 		} //table
-		
+
 		//ローダ
 		td.loader {
 			display: block;
@@ -584,18 +596,17 @@ html {
 					content: "ログアウト";
 				}
 				img {
-					 display: none !important;
+					display: none !important;
 				} //img
 			} //a
 		} //td
-		
-		
+
+
 		.myschedule {
 			table {
-				$schedule-margin: 20px;
-				width: $page-width - $schedule-margin * 2 - 2px !important;
-				margin: 4px $schedule-margin 10px;
-				
+				width: $page-width - 2px !important;
+				margin: 20px 0 40px;
+
 				tr[bgcolor="#cbd7e4"] {
 					th {
 						height: 24px;
@@ -607,7 +618,7 @@ html {
 						border-right: 1px solid white;
 						@include background(
 							linear-gradient(top, #FBFBFC, #EFF3F4)
-						);
+							);
 					}
 				} //tr
 				tr[bgcolor="#eeeeee"] {
@@ -620,13 +631,13 @@ html {
 						font-weight: normal;
 						text-align: left;
 						a {
-							font-weight: bold;
+
 						} //a
 					} //td
 				} //tr
 			} //table
 		} //.myschedule
-		
+
 	} //body
 } //html
 

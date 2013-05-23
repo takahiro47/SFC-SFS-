@@ -1,6 +1,209 @@
 //use strict;
 //use warnings;
 
+(function(){
+	var jQuery = window.jQuery = window.$ = function(ele){
+		return new jQuery.fn.init(ele);
+	};
+	jQuery.fn = {
+		/** jQuery Instance **/
+		//initialize
+		init: function(ele){
+			this.assignEventHandlers();
+			//this.start();
+			
+			alert("All Done.");
+		},
+		assignEventHandlers: function(){
+			
+		},
+		alert: function(data){ //ex
+			alert(data);
+		},
+		getServerUrl: function(){
+			return "http://ht.sfc.keio.ac.jp/~tsucchi/sfcsfs/";
+		},
+		getCurrentUrl: function(){
+			/*
+			chrome.tabs.getSelected(window.id, function(tab){
+				var url = document.createTextNode(tab.url); //tab.url = 開いているタブのURL
+				document.getElementById('url').appendChild(url);
+			});
+			return url;
+			*/
+			return window.location.href;
+		},
+		getUrlVars: function(){
+			var vars = [], hash;
+			var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+			for(var i = 0; i < hashes.length; i++) {
+				hash = hashes[i].split('=');
+				vars.push(hash[0]);
+				vars[hash[0]] = hash[1];
+			} 
+			vars['term'] = '2013s';
+			vars['fix']	= '1';
+			vars['type'] = 's';
+			vars['mode'] = '0';
+			return vars;
+		},
+		checkLoginStatus: function(){
+			var login_flag = false;
+			switch ( this.getCurrentUrl() ) {
+				case 'https://vu8.sfc.keio.ac.jp/sfc-sfs/':
+				case 'https://vu9.sfc.keio.ac.jp/sfc-sfs/':
+					login_flag = true;
+					break;
+				default:
+					login_flag = false;
+					break;
+			} //switch
+			return login_flag;
+		},
+		start: function() {
+			if( !this.checkLoginStatus() ){
+				//ログインしていない場合: 各種機能を実行
+				//HTML4を再構成
+				this.htmlStructure();
+				//Chromeタブ生成
+				this.chromeTabCreate();
+				//スケジュールタブを生成
+				this.loadScheduleTab();
+			}else{
+				//ログインしていたら
+			}
+		},
+		htmlStructure: function(){
+			//不要td要素の排除
+			$("td[width~='1'], td[bgcolor~='#8ba1bd'], td[width~='14']").remove();
+			
+			//枠の削除
+			$("img[src$='page_top.gif'], img[src$='page_top_l.gif'], img[src$='page_bottom.gif']")
+				.closest('table').remove();
+			
+			//HTML構成の整形
+			$("body > table").each(function(){
+				$(this).wrap('<div class="container"></div>');
+			});
+			$(".container:first-child").addClass('header-container');
+			$('#footer').closest('.container').addClass('footer-container');
+			
+			//ヘッダー関連
+			this.headerNaviInitial();
+			
+			//ローダー関連
+			this.createLoader();
+		},
+		createLoader: function(){
+			$("td[width~='350']").after("<td class='loader alpha0'></td>"); //ローダの追加
+			return true;
+		},
+		startLoader: function(){ //ローダー開始
+			$(".loader").removeClass('alpha1').addClass('alpha0');
+		},
+		stopLoader: function(){ //ローダー削除
+			$(".loader").removeClass('alpha0').addClass('alpha1');
+		},
+		headerNaviInitial: function(){
+			//ヘッダナビの生成
+			$('.header-container').prepend(function() {
+				var uri_base0 = '//vu8.sfc.keio.ac.jp/sfc-sfs/portal_s/s0', uri_base1 = '.cgi?id='+token['id']+'&amp;type='+token['type']+'&amp;mode='+token['mode']+'&amp;lang='+token['lang'];
+				var items = ['cource', 'plan', 'mentor', 'graduate'];
+				var elm = $('<div class="header-navi"></div>'), li = [];
+				
+				li.push('<ul class="header-navi-items clearfix">');
+				for (var i=1; i<=4; i++) {
+					li.push('<li class="header-navi-item item-'+items[i-1]+'"><a href="'+uri_base0+i+uri_base1+'"></a></li>');
+				}
+				li.push('</ul>');
+				
+				return elm.append(li.join(""));
+			});
+			
+			//ヘッダナビの現在ビュー位置をマーキング
+			if (current_uri.match(/s01\.cgi/g)) $('.item-cource').addClass('item-current')
+			else if (current_uri.match(/s02\.cgi/g)) $('.item-plan').addClass('item-current')
+			else if (current_uri.match(/s03\.cgi/g)) $('.item-mentor').addClass('item-current')
+			else if (current_uri.match(/s04\.cgi/g)) $('.item-graduate').addClass('item-current')
+		},
+		headerNaviChange: function(name){
+			//TO DO
+		},
+		chromeTabCreate: function(){
+			$('.header-container').append([
+				'<div class="chrome-tabs-shell">\
+					<div class="chrome-tabs">\
+						<div class="chrome-tab">\
+							<div class="chrome-tab-favicon"></div>\
+							<div class="chrome-tab-title">My時間割</div>\
+							<div class="chrome-tab-curves">\
+								<div class="chrome-tab-curve-left-shadow2"></div>\
+								<div class="chrome-tab-curve-left-shadow1"></div>\
+								<div class="chrome-tab-curve-left"></div>\
+								<div class="chrome-tab-curve-right-shadow2"></div>\
+								<div class="chrome-tab-curve-right-shadow1"></div>\
+								<div class="chrome-tab-curve-right"></div>\
+							</div>\
+						</div>\
+						<div class="chrome-tab chrome-tab-current">\
+							<div class="chrome-tab-favicon"></div>\
+							<div class="chrome-tab-title">履修授業</div>\
+							<div class="chrome-tab-close"></div>\
+							<div class="chrome-tab-curves">\
+								<div class="chrome-tab-curve-left-shadow2"></div>\
+								<div class="chrome-tab-curve-left-shadow1"></div>\
+								<div class="chrome-tab-curve-left"></div>\
+								<div class="chrome-tab-curve-right-shadow2"></div>\
+								<div class="chrome-tab-curve-right-shadow1"></div>\
+								<div class="chrome-tab-curve-right"></div>\
+							</div>\
+						</div>\
+					</div>\
+					<div class="chrome-shell-bottom-bar"></div>\
+				</div>'
+			].join(""));
+			this.chromeTabInitial();
+		},
+		chromeTabInitial: function(){
+			var $chromeTabsHeaderShell = $('.chrome-tabs-shell')
+			chromeTabs.init({
+				$shell: $chromeTabsHeaderShell,
+				minWidth: 80,
+				maxWidth: 180
+			});
+			chromeTabs.addNewTab($chromeTabsHeaderShell, {
+				favicon: 'http://g.etfv.co/http://www.keio.ac.jp/',
+				title: 'New Tab',
+				data: {
+					timeAdded: +new Date()
+				}
+			});
+			$chromeTabsHeaderShell.bind('chromeTabRender', function(){
+				var $currentTab = $chromeTabsHeaderShell.find('.chrome-tab-current');
+				if ($currentTab.length && window['console'] && console.log) {
+					console.log('CurrentTab index:', $currentTab.index(), ', title:', $.trim($currentTab.text()), ', data:', $currentTab.data('tabData').data);
+				}
+			});
+			return true;
+		},
+		loadScheduleTab: function(){
+			//
+		}
+	}
+	jQuery.fn.init.prototype = jQuery.fn;
+})();
+
+$().start();
+
+
+
+
+
+
+
+
+
+
 var setInitSaveData = function(data) {
 	if(!getSaveData()) setSaveData(data);
 };
@@ -48,7 +251,7 @@ $(function() {
 		//
 	} else {
 		/* =HTML整形
-		 *------------------------------------------------------ */
+		 *------------------------------------------------------ *
 		function html_arrange() {
 			//不要td要素の排除
 			$("td[width~='1'], td[bgcolor~='#8ba1bd'], td[width~='14']").remove();
@@ -93,16 +296,16 @@ $(function() {
 		html_arrange();
 		
 		
-		/* =ヘッダナビのcurrentを変色
-		 *------------------------------------------------------ */
+		* =ヘッダナビのcurrentを変色
+		 *------------------------------------------------------ *
 		if (current_uri.match(/s01\.cgi/g)) $('.item-cource').addClass('item-current')
 		else if (current_uri.match(/s02\.cgi/g)) $('.item-plan').addClass('item-current')
 		else if (current_uri.match(/s03\.cgi/g)) $('.item-mentor').addClass('item-current')
 		else if (current_uri.match(/s04\.cgi/g)) $('.item-graduate').addClass('item-current')
 		
 		
-		/* =Chrome Tab Initial
-		 *------------------------------------------------------ */
+		* =Chrome Tab Initial
+		 *------------------------------------------------------ *
 		$('.header-container').append([
 			'<div class="chrome-tabs-shell">\
 				<div class="chrome-tabs">\
@@ -138,8 +341,8 @@ $(function() {
 		
 		
 		
-		/* =Chromeタブ 初期化
-		 *------------------------------------------------------ */
+		* =Chromeタブ 初期化
+		 *------------------------------------------------------ *
 		var $chromeTabsHeaderShell = $('.chrome-tabs-shell')
 		chromeTabs.init({
 			$shell: $chromeTabsHeaderShell,
@@ -159,7 +362,7 @@ $(function() {
 				console.log('CurrentTab index:', $currentTab.index(), ', title:', $.trim($currentTab.text()), ', data:', $currentTab.data('tabData').data);
 			}
 		});
-		
+		*/
 		
 		/* =My時間割タブの読み込み
 		 *------------------------------------------------------ */
@@ -214,8 +417,8 @@ $(function() {
 		var push_target_html4 = 'td[width="790"]';
 		//初期ページのタイトルとHTMLを定義
 		var _default = { 
-			title : document.title,
-			content : $(push_target_html5).html()
+			title: document.title,
+			content: $(push_target_html5).html()
 		};
 		//PushState
 		var pushStateToggle = function(){
@@ -296,7 +499,7 @@ $(function() {
 				y = e.pageY - this.offsetTop;
 				xy = x + " " + y;
 				bgWebKit = "-webkit-gradient(radial, " + xy + ", 0, " + xy + ", 100, from(rgba(255,255,255,0.8)), to(rgba(255,255,255,0.0))), " + originalBG;
-				bgMoz    = "-moz-radial-gradient(" + x + "px " + y + "px 45deg, circle, " + lightColor + " 0%, " + originalBG + " " + gradientSize + "px)";
+				bgMoz		= "-moz-radial-gradient(" + x + "px " + y + "px 45deg, circle, " + lightColor + " 0%, " + originalBG + " " + gradientSize + "px)";
 				$(this)
 					.css({ background: bgWebKit })
 					.css({ background: bgMoz });

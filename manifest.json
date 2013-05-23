@@ -13,7 +13,7 @@
   },
   "content_scripts": [{
     "css": [ "custom.css" ],
-    "js": [ "jquery.js", "jquery-ui.js", "chrome.js", "custom.js" ],
+    "js": [ "jquery.js", "jquery-ui.js", "chrome-tabs.js", "sfcsfs.js" ],
     "matches": [ "https://vu8.sfc.keio.ac.jp/sfc-sfs/*", "https://vu9.sfc.keio.ac.jp/sfc-sfs/*" ]
   }]
 }
